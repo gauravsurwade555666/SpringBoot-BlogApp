@@ -3,6 +3,7 @@ package com.gaurav.blog.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ import com.gaurav.blog.exceptions.ResourceNotFoundException;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+    
+    @Autowired
+    private ModelMapper modelMapper;
 
     // Implement the methods defined in UserService interface
     @Override
@@ -75,23 +79,32 @@ public class UserServiceImpl implements UserService {
     }
 
     private User convertToEntity(UserDTO userDTO) {
+
+        //using model mapper
+        User user = modelMapper.map(userDTO, User.class);
+
+
         // Convert UserDTO to User entity
-        User user = new User();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setAbout(userDTO.getAbout());
+        // User user = new User();
+        // user.setName(userDTO.getName());
+        // user.setEmail(userDTO.getEmail());
+        // user.setPassword(userDTO.getPassword());
+        // user.setAbout(userDTO.getAbout());
         return user;
     }
 
     private UserDTO convertToDTO(User user) {
+
+        //using model mapper
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
         // Convert User entity to UserDTO
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setAbout(user.getAbout());
+        // UserDTO userDTO = new UserDTO();
+        // userDTO.setId(user.getId());
+        // userDTO.setName(user.getName());
+        // userDTO.setEmail(user.getEmail());
+        // userDTO.setPassword(user.getPassword());
+        // userDTO.setAbout(user.getAbout());
         return userDTO;
     }
 }

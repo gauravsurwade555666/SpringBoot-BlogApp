@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gaurav.blog.payloads.UserDTO;
 import com.gaurav.blog.services.UserService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +32,14 @@ public class UserController {
 
     //POST
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid  @RequestBody UserDTO userDTO) {
         UserDTO createdUser = this.userService.createUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     //PUT
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable int userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@Valid @PathVariable int userId, @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = this.userService.updateUser(userId, userDTO);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }

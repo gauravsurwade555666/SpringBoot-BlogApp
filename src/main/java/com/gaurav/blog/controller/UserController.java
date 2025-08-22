@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -39,14 +38,14 @@ public class UserController {
 
     //PUT
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@Valid @PathVariable int userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@Valid @PathVariable Integer userId, @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = this.userService.updateUser(userId, userDTO);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     //DELETE
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
         this.userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -61,7 +60,7 @@ public class UserController {
 
     //GET User by ID
     @GetMapping("/{UserId}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable int UserId) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Integer UserId) {
         UserDTO user = this.userService.getUserById(UserId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

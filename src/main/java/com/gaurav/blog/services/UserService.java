@@ -6,11 +6,11 @@ public interface UserService {
     //create
     UserDTO createUser(UserDTO userDTO);
     //update
-    UserDTO updateUser(int userId, UserDTO userDTO);
+    UserDTO updateUser(Integer userId, UserDTO userDTO);
 
-    void deleteUser(int userId);
+    void deleteUser(Integer userId);
 
-    UserDTO getUserById(int userId);
+    UserDTO getUserById(Integer userId);
 
     List<UserDTO> getAllUsers();
 }

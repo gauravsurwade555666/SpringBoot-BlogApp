@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(int userId, UserDTO userDTO) {
+    public UserDTO updateUser(Integer userId, UserDTO userDTO) {
         // Implementation logic here
         User existingUser = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public void deleteUser(Integer userId) {
           // Implementation logic here
         User existingUser = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(int userId) {
+    public UserDTO getUserById(Integer userId) {
         // Implementation logic here
          User existingUser = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));

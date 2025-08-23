@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.gaurav.blog.payloads.PostDTO;
+import com.gaurav.blog.payloads.PostResponse;
 
 public interface PostService {
 
@@ -16,7 +17,7 @@ public interface PostService {
     //get
     PostDTO getPostById(Integer postId);
     //get all
-    List<PostDTO> getAllPosts();
+    PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
     //get by category
     List<PostDTO> getPostsByCategory(Integer categoryId);
     //get by user

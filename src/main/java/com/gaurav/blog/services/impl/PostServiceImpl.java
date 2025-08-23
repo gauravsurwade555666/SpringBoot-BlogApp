@@ -25,6 +25,7 @@ import com.gaurav.blog.services.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -90,10 +91,11 @@ public class PostServiceImpl implements PostService {
 
     // get all
     @Override
-    public PostResponse getAllPosts(Integer pageNumber, Integer pageSize) {
-         //Implementation of pagination
+    public PostResponse getAllPosts(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+         //Implementation of pagination & SORTING
+         Sort sort = (sortDir.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
          //Create  Pageable instance
-        Pageable p = PageRequest.of(pageNumber, pageSize);
+        Pageable p = PageRequest.of(pageNumber, pageSize, sort);
         //fetch data from database in form of page object
          Page<Post> pagePost = this.postRepo.findAll(p);
          //get content from page object

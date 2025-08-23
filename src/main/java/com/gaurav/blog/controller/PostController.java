@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 @RestController
 @RequestMapping("/api/")
 public class PostController {
@@ -32,7 +30,8 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
-    public ResponseEntity<PostDTO> createPost(@Valid @PathVariable Integer userId, @PathVariable Integer categoryId, @RequestBody PostDTO postDTO) {
+    public ResponseEntity<PostDTO> createPost(@Valid @PathVariable Integer userId, @PathVariable Integer categoryId,
+            @RequestBody PostDTO postDTO) {
         PostDTO createdPost = this.postService.createPost(postDTO, userId, categoryId);
         return new ResponseEntity<PostDTO>(createdPost, HttpStatus.CREATED);
     }
@@ -51,13 +50,15 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(
-        @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-        @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
-        PostResponse posts = this.postService.getAllPosts(pageNumber, pageSize);
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+        PostResponse posts = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
         return new ResponseEntity<PostResponse>(posts, HttpStatus.OK);
     }
 
-     @GetMapping("/posts/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<PostDTO> getPostById(@PathVariable Integer postId) {
         PostDTO post = this.postService.getPostById(postId);
         return new ResponseEntity<PostDTO>(post, HttpStatus.OK);
@@ -67,7 +68,7 @@ public class PostController {
     public ResponseEntity<PostDTO> updatePostById(@PathVariable Integer postId, @RequestBody PostDTO postDTO) {
         PostDTO updatedPost = this.postService.updatePost(postId, postDTO);
         return new ResponseEntity<PostDTO>(updatedPost, HttpStatus.OK);
-       
+
     }
 
     @DeleteMapping("posts/{postId}")

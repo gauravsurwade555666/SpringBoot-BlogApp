@@ -1,5 +1,8 @@
 package com.gaurav.blog.payloads;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +25,5 @@ public class PostDTO {
 
     private CategoryDTO category;
     private UserDTO user;
+    private Set<CommentDTO> comments = new HashSet<>();
 }

@@ -24,6 +24,9 @@ public class PostDTO {
     private String addedDate;
 
     private CategoryDTO category;
+
+    //get call of Post will return only one user hence used UserDTO here.
     private UserDTO user;
+    //get call of Post will return list of comments hence used Set here.
     private Set<CommentDTO> comments = new HashSet<>();
 }

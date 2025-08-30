@@ -8,29 +8,56 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.gaurav.blog.security.CustomUserDetailsService;
+import com.gaurav.blog.security.JwtAuhtenticationFilter;
+import com.gaurav.blog.security.JwtAuthenticationEntryPoint;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity  
+@EnableWebSecurity(debug=true)
 public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private JwtAuhtenticationFilter jwtAuhtenticationFilter;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // config for Basic Authentication
+
+        // http
+        // .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity
+        // .authorizeHttpRequests(auth -> auth
+        // .requestMatchers("/public/**").permitAll() // Allow public access to
+        // /public/**
+        // .anyRequest().authenticated() // Require authentication for any other request
+        // )
+        // .httpBasic(httpBasic -> {}); // Use basic HTTP authentication
+        // http.authenticationProvider(this.daoAuthenticationProvider());
+
+        // config for JWT
+
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll() // Allow public access to /public/**
-                        .anyRequest().authenticated() // Require authentication for any other request
-                )
-                .httpBasic(httpBasic -> {}); // Use basic HTTP authentication
-                http.authenticationProvider(this.daoAuthenticationProvider());
+                .requestMatchers("/public/**").permitAll()
+                        .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.authenticationProvider(this.daoAuthenticationProvider());
+        http.addFilterBefore(jwtAuhtenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

@@ -45,11 +45,11 @@ public class AuthController {
     }
     public void authenticate(String username, String password) throws Exception{
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
-        try{
+        // try{
         this.authenticationManager.authenticate(authenticationToken);
-        } catch(BadCredentialsException e){
-            throw new Exception("Invalid UserName or Password");
-        }
+        // } catch(BadCredentialsException e){
+        //     throw new Exception("Invalid UserName or Password");
+        // }
 
     }
 

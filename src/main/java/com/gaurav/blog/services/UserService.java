@@ -13,4 +13,7 @@ public interface UserService {
     UserDTO getUserById(Integer userId);
 
     List<UserDTO> getAllUsers();
+
+    //register new user
+    UserDTO registerNewUser(UserDTO userDTO);
 }

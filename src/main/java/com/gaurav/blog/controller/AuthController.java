@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gaurav.blog.payloads.JwtAuthRequest;
 import com.gaurav.blog.payloads.JwtAuthResponse;
+import com.gaurav.blog.payloads.UserDTO;
 import com.gaurav.blog.security.JwtTokenHelper;
+import com.gaurav.blog.services.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,8 @@ public class AuthController {
     private UserDetailsService userDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest jwtAuthRequest) throws Exception{
@@ -52,5 +56,13 @@ public class AuthController {
         // }
 
     }
+
+    @PostMapping("registerUser")
+    public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO userDTO) {
+        
+       UserDTO newUser =  this.userService.registerNewUser(userDTO);
+        return new ResponseEntity<UserDTO> (newUser, HttpStatus.CREATED);
+    }
+    
 
 }

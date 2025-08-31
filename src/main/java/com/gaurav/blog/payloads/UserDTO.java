@@ -1,5 +1,8 @@
 package com.gaurav.blog.payloads;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -29,5 +32,6 @@ public class UserDTO {
     @NotNull
     private String about;
 
-    
+    private Set<RoleDTO> roles = new HashSet<>();
+
 }
